@@ -4,7 +4,7 @@
 
 using namespace std;
 
-vector<Position>* ExecuteAStar(Execution& execution) {
+vector<Position>* ExecuteAStar(Execution* execution) {
   cout << "NOT IMPLEMENTED";
   return nullptr;
 }

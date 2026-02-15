@@ -1,3 +1,3 @@
 #include "../../core/Execution.h"
 
-vector<Position>* ExecuteAStar(Execution& execution);
+vector<Position>* ExecuteAStar(Execution* execution);

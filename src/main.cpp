@@ -3,6 +3,7 @@
 
 #include "./core/Execution.h"
 #include "./implementations/menu/LoadMaze.h"
+#include "./implementations/menu/MatrixToGraph.h"
 
 // Funciones de cada algoritmo
 
@@ -34,7 +35,7 @@ int menu() {
 int main(void) {
   SetConsoleOutputCP(CP_UTF8);
 
-  Execution execution;
+  Execution* execution = new Execution();
   vector<Position>* resultado;
 
   while (true) {
@@ -42,7 +43,9 @@ int main(void) {
 
     switch (opt) {
       case 1:
-        LoadMaze(&execution.maze);
+        Maze* maze;
+        LoadMaze(maze);
+        execution->graph = MatrixToGraph(maze);
         break;
       case 2: {
         resultado = ExecuteDFS(execution);

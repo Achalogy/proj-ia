@@ -5,6 +5,10 @@ struct Maze {
   long n;
   long m;
   char** matrix;
+
+  ~Maze() {
+    delete matrix;
+  }
 };
 
 #endif

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-vector<Position>* ExecuteDFS(Execution& execution) {
+vector<Position>* ExecuteDFS(Execution* execution) {
   cout << "NOT IMPLEMENTED";
   return nullptr;
 }
