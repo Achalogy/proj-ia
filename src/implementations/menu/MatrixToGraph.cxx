@@ -85,5 +85,7 @@ Graph* MatrixToGraph(Maze* maze) {
     return nullptr;
   }
 
+  cout << "Laberinto válido, grafo generado" << endl;
+
   return graph;
 }
