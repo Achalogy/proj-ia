@@ -14,6 +14,10 @@ struct Position {
 
 struct Execution {
   Graph* graph;
+
+  ~Execution() {
+    delete graph;
+  }
 };
 
 #endif

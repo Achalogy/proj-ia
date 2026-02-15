@@ -16,6 +16,12 @@ struct Graph {
 
   vector<Node*> nodes;
   vector<vector<int>> adj;
+
+  ~Graph() {
+    delete maze;
+    delete start;
+    delete end;
+  }
 };
 
 #endif

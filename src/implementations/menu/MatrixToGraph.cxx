@@ -23,6 +23,9 @@ void tryAddAdj(Maze* maze, Graph* graph, int i, int j, int di, int dj) {
 Graph* MatrixToGraph(Maze* maze) {
   Graph* graph = new Graph;
 
+  graph->start = nullptr;
+  graph->end = nullptr;
+
   long node_count = maze->m * maze->n;
 
   graph->maze = maze;
@@ -40,8 +43,24 @@ Graph* MatrixToGraph(Maze* maze) {
 
       graph->nodes[node->id] = node;
 
-      if (node->type == '2') graph->start = node;
-      if (node->type == '3') graph->end = node;
+      if (node->type == '2') {
+        if (graph->start != nullptr) {
+          cout << "Grafo invalido, multiples nodos de inicio" << endl;
+
+          delete graph;
+          return nullptr;
+        }
+        graph->start = node;
+      }
+      if (node->type == '3') {
+        if (graph->end != nullptr) {
+          cout << "Grafo invalido, multiples nodos de salida" << endl;
+
+          delete graph;
+          return nullptr;
+        }
+        graph->end = node;
+      }
       if (node->type == '0' || node->type == '2' || node->type == '3') {
         // Pos Arriba
         tryAddAdj(maze, graph, i, j, -1, 0);
@@ -53,6 +72,17 @@ Graph* MatrixToGraph(Maze* maze) {
         tryAddAdj(maze, graph, i, j, 0, -1);
       }
     }
+  }
+
+  if (graph->start == nullptr) {
+    cout << "El laberinto no tiene inicio" << endl;
+    delete graph;
+    return nullptr;
+  }
+  if (graph->end == nullptr) {
+    cout << "El laberinto no tiene salida" << endl;
+    delete graph;
+    return nullptr;
   }
 
   return graph;
