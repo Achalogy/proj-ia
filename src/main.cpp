@@ -18,12 +18,11 @@ int menu() {
 
   do {
     cout << "1. Cargar laberinto" << endl;
-    cout << "2. Ingresar salida y meta" << endl;
-    cout << "3. Función en profundidad" << endl;
-    cout << "4. Función en anchura" << endl;
-    cout << "5. Función heurística" << endl;
-    cout << "6. Funcion A*" << endl;
-    cout << "7. Salir" << endl;
+    cout << "2. Función en profundidad" << endl;
+    cout << "3. Función en anchura" << endl;
+    cout << "4. Función heurística" << endl;
+    cout << "5. Funcion A*" << endl;
+    cout << "6. Salir" << endl;
 
     cout << "> ";
     cin >> opt;
@@ -46,38 +45,22 @@ int main(void) {
         LoadMaze(&execution.maze);
         break;
       case 2: {
-        cout << "Posición Inicio: " << endl;
-        cout << "y = ";
-        cin >> execution.start.y;
-        cout << "x = ";
-        cin >> execution.start.x;
-        cout << endl;
-
-        cout << "Posición Meta: " << endl;
-        cout << "y = ";
-        cin >> execution.end.y;
-        cout << "x = ";
-        cin >> execution.end.x;
-        cout << endl;
-        break;
-      }
-      case 3: {
         resultado = ExecuteDFS(execution);
         break;
       }
-      case 4: {
+      case 3: {
         resultado = ExecuteBFS(execution);
         break;
       }
-      case 5: {
+      case 4: {
         resultado = ExecuteHeuristica(execution);
         break;
       }
-      case 6: {
+      case 5: {
         resultado = ExecuteAStar(execution);
         break;
       }
-      case 7:
+      case 6:
         return 0;
     }
   }
