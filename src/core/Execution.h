@@ -3,7 +3,7 @@
 
 #include <bits/stdc++.h>
 
-#include "./Maze.h"
+#include "./Graph.h"
 
 using namespace std;
 
@@ -13,10 +13,7 @@ struct Position {
 };
 
 struct Execution {
-  Maze maze;
-
-  Position start;
-  Position end;
+  Graph* graph;
 };
 
 #endif

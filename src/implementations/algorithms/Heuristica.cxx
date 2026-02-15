@@ -5,7 +5,7 @@
 
 using namespace std;
 
-vector<Position>* ExecuteHeuristica(Execution& execution) {
+vector<Position>* ExecuteHeuristica(Execution* execution) {
   cout << "NOT IMPLEMENTED";
   return nullptr;
 }

@@ -1,3 +1,3 @@
 #include "../../core/Execution.h"
 
-vector<Position>* ExecuteDFS(Execution& execution);
+vector<Position>* ExecuteDFS(Execution* execution);

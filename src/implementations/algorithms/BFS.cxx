@@ -5,7 +5,7 @@
 
 using namespace std;
 
-vector<Position>* ExecuteBFS(Execution& execution) {
+vector<Position>* ExecuteBFS(Execution* execution) {
   cout << "NOT IMPLEMENTED";
   return nullptr;
 }
