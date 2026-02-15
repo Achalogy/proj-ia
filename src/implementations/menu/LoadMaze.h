@@ -4,4 +4,4 @@
 
 using namespace std;
 
-void LoadMaze(Maze* maze) { cout << "NOT IMPLEMENTED"; }
+void LoadMaze(Maze* maze);
