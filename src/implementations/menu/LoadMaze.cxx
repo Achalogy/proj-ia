@@ -48,7 +48,21 @@ void LoadMaze(Maze* maze) {
   if (maze->n <= 25 && maze->m <= 25) {
     for (int i = 0; i < maze->n; i++) {
       for (int j = 0; j < maze->m; j++) {
-        cout << maze->matrix[i][j] << " ";
+        switch (maze->matrix[i][j]) {
+          case '0':
+            cout << "·";
+            break;
+          case '1':
+            cout << "■";
+            break;
+          case '2':
+            cout << "O";
+            break;
+          case '3':
+            cout << "X";
+            break;
+        }
+        cout << " ";
       }
       cout << endl;
     }
