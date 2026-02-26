@@ -5,6 +5,6 @@
 
 #include "../core/Execution.h"
 
-void PrintPath(vector<Position>* path, int rows, int cols);
+void PrintPath(vector<Position>* path, Execution* execution);
 
 #endif

@@ -4,6 +4,7 @@
 #include "./core/Execution.h"
 #include "./implementations/menu/LoadMaze.h"
 #include "./implementations/menu/MatrixToGraph.h"
+#include "./utils/PrintPath.h"
 
 // Funciones de cada algoritmo
 
@@ -36,7 +37,7 @@ int main(void) {
   SetConsoleOutputCP(CP_UTF8);
 
   Execution* execution = new Execution();
-  vector<Position>* resultado;
+  vector<Position>* result;
 
   while (true) {
     int opt = menu();
@@ -49,19 +50,23 @@ int main(void) {
         break;
       }
       case 2: {
-        resultado = ExecuteDFS(execution);
+        result = ExecuteDFS(execution);
+        PrintPath(result, execution);
         break;
       }
       case 3: {
-        resultado = ExecuteBFS(execution);
+        result = ExecuteBFS(execution);
+        PrintPath(result, execution);
         break;
       }
       case 4: {
-        resultado = ExecuteHeuristica(execution);
+        result = ExecuteHeuristica(execution);
+        PrintPath(result, execution);
         break;
       }
       case 5: {
-        resultado = ExecuteAStar(execution);
+        result = ExecuteAStar(execution);
+        PrintPath(result, execution);
         break;
       }
       case 6:
@@ -70,5 +75,5 @@ int main(void) {
   }
 
   delete execution;
-  delete[] resultado;
+  delete[] result;
 }

@@ -4,10 +4,6 @@
 #include <vector>
 #include "../../core/Execution.h"
 
-
 vector<Position>* ExecuteDFS(Execution* execution);
-
-
-void PrintPath(vector<Position>* path, int rows, int cols);
 
 #endif
