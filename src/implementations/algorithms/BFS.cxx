@@ -5,10 +5,7 @@
 
 using namespace std;
 
-vector<Position> ExecuteBFS(Execution* execution) {
-  cout << "Empezando :D " << execution->graph->maze->m << endl;
-  cout << "Empezando :D " << execution->graph->maze->n << endl;
-  cout << "Empezando :D " << execution->graph->maze->matrix << endl;
+vector<Position>* ExecuteBFS(Execution* execution) {
   vector<bool> visited(execution->graph->maze->m * execution->graph->maze->n);
   vector<long> parent(execution->graph->maze->m * execution->graph->maze->n);
 
@@ -16,6 +13,7 @@ vector<Position> ExecuteBFS(Execution* execution) {
 
   q.push(execution->graph->start->id);
   parent[execution->graph->start->id] = -1;
+  visited[execution->graph->start->id] = true;
 
   while (!q.empty()) {
     long curr = q.front();
@@ -40,11 +38,9 @@ vector<Position> ExecuteBFS(Execution* execution) {
     pos.y = curr / execution->graph->maze->n;
     pos.x = curr % execution->graph->maze->n;
 
-    cout << "y=" << pos.y << " - x=" << pos.x << endl;
-
     path.push_back(pos);
     curr = parent[curr];
   }
 
-  return vector<Position>(path.rend(), path.rbegin());
+  return new vector<Position>(path.rbegin(), path.rend());
 }

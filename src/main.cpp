@@ -68,4 +68,7 @@ int main(void) {
         return 0;
     }
   }
+
+  delete execution;
+  delete[] resultado;
 }

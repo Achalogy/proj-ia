@@ -6,9 +6,7 @@ struct Maze {
   long m;
   char** matrix;
 
-  ~Maze() {
-    delete matrix;
-  }
+  ~Maze() { delete[] matrix; }
 };
 
 #endif
