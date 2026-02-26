@@ -3,20 +3,25 @@
 
 #include <bits/stdc++.h>
 
-#include "./Maze.h"
+#include "./Graph.h"
 
 using namespace std;
 
 struct Position {
   int y;
   int x;
+
+  Position(int y, int x) : y(y), x(x) {}
+  Position() {
+    y = 0;
+    x = 0;
+  }
 };
 
 struct Execution {
-  Maze maze;
+  Graph* graph;
 
-  Position start;
-  Position end;
+  ~Execution() { delete graph; }
 };
 
 #endif

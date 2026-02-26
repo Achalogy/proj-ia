@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
 
 #include "../../core/Maze.h"
+#include "../../core/Graph.h"
 
 using namespace std;
 
-void LoadMaze(Maze* maze);
+Graph* MatrixToGraph(Maze* maze);
