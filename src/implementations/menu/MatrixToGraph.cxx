@@ -21,7 +21,7 @@ void tryAddAdj(Maze* maze, Graph* graph, int i, int j, int di, int dj) {
 }
 
 Graph* MatrixToGraph(Maze* maze) {
-  Graph* graph = new Graph;
+  Graph* graph = new Graph();
 
   graph->start = nullptr;
   graph->end = nullptr;
@@ -87,5 +87,6 @@ Graph* MatrixToGraph(Maze* maze) {
 
   cout << "Laberinto válido, grafo generado" << endl;
 
+  cout << graph << endl;
   return graph;
 }
