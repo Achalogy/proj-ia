@@ -41,8 +41,8 @@ vector<Position>* ExecuteBFS(Execution* execution) {
 
   while (curr != -1) {
     Position pos;
-    pos.y = curr / execution->graph->maze->n;
-    pos.x = curr % execution->graph->maze->n;
+    pos.y = curr / execution->graph->maze->m;
+    pos.x = curr % execution->graph->maze->m;
 
     path.push_back(pos);
     curr = parent[curr];
