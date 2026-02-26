@@ -25,7 +25,6 @@ bool dfsHelper(int u, int target, Graph* graph, vector<bool>& visited,
 
 vector<Position>* ExecuteDFS(Execution* execution) {
   if (!execution->graph) {
-    cout << "No hay un grafo cargado." << endl;
     return nullptr;
   }
 

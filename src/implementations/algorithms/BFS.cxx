@@ -6,6 +6,10 @@
 using namespace std;
 
 vector<Position>* ExecuteBFS(Execution* execution) {
+  if (!execution->graph) {
+    return nullptr;
+  }
+  
   vector<bool> visited(execution->graph->maze->m * execution->graph->maze->n);
   vector<long> parent(execution->graph->maze->m * execution->graph->maze->n);
 
