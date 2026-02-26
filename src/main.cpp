@@ -42,11 +42,12 @@ int main(void) {
     int opt = menu();
 
     switch (opt) {
-      case 1:
-        Maze* maze;
+      case 1: {
+        Maze* maze = new Maze();
         LoadMaze(maze);
         execution->graph = MatrixToGraph(maze);
         break;
+      }
       case 2: {
         resultado = ExecuteDFS(execution);
         break;
@@ -67,4 +68,7 @@ int main(void) {
         return 0;
     }
   }
+
+  delete execution;
+  delete[] resultado;
 }
