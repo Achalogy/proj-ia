@@ -32,6 +32,7 @@ int menu() {
 }
 
 int main(void) {
+  // Manejar todos los caracteres y tildes
   SetConsoleOutputCP(CP_UTF8);
 
   Execution* execution = new Execution();

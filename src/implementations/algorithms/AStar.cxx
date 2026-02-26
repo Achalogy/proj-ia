@@ -4,10 +4,15 @@
 
 using namespace std;
 
+// Función heuristica, calcula la distancia manhattan hacía la salida
 long calc_heuristic(Execution* execution, int i, int j) {
   return abs(execution->graph->end->y - i) + abs(execution->graph->end->x - j);
 }
 
+/*
+  Función que ejecuta el algoritmo de busqueda A* sobre un grafo dado
+  Retorna el vector de posiciones seguidas para llegar a la salida en orden
+*/
 vector<Position>* ExecuteAStar(Execution* execution) {
   int n = execution->graph->maze->n;
   int m = execution->graph->maze->m;
@@ -74,5 +79,6 @@ vector<Position>* ExecuteAStar(Execution* execution) {
     curr = parent[curr];
   }
 
+  // Retornar un vector reversado
   return new vector<Position>(path.rbegin(), path.rend());
 }

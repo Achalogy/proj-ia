@@ -6,6 +6,9 @@
 
 using namespace std;
 
+/*
+  Función principal del dfs, es la función recursiva que es llamada por cada nodo.
+*/
 bool dfsHelper(int u, int target, Graph* graph, vector<bool>& visited,
                map<int, int>& parent) {
   visited[u] = true;
@@ -23,6 +26,10 @@ bool dfsHelper(int u, int target, Graph* graph, vector<bool>& visited,
   return false;
 }
 
+/*
+  Función que ejecuta el algoritmo de busqueda en profundidad o DFS sobre un grafo dado
+  Retorna el vector de posiciones seguidas para llegar a la salida en orden
+*/
 vector<Position>* ExecuteDFS(Execution* execution) {
   if (!execution->graph) {
     return nullptr;
@@ -37,6 +44,7 @@ vector<Position>* ExecuteDFS(Execution* execution) {
   map<int, int> parent;
   vector<Position>* path = new vector<Position>();
 
+  // Reconstruir el camino y retornarlo
   if (dfsHelper(startId, endId, g, visited, parent)) {
     int curr = endId;
     while (curr != startId) {

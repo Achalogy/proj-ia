@@ -20,6 +20,7 @@ void tryAddAdj(Maze* maze, Graph* graph, int i, int j, int di, int dj) {
   }
 }
 
+// Función para convertir una matriz a una estructura de grafo usando apuntadores.
 Graph* MatrixToGraph(Maze* maze) {
   Graph* graph = new Graph();
 
@@ -43,6 +44,7 @@ Graph* MatrixToGraph(Maze* maze) {
 
       graph->nodes[node->id] = node;
 
+      // Revisión de los datos tomados para el correcto funcionamiento del sistema.
       if (node->type == '2') {
         if (graph->start != nullptr) {
           cout << "Grafo invalido, multiples nodos de inicio" << endl;

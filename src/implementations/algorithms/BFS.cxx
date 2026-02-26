@@ -5,6 +5,10 @@
 
 using namespace std;
 
+/*
+  Función que ejecuta el algoritmo de busqueda en anchura o BFS sobre un grafo dado
+  Retorna el vector de posiciones seguidas para llegar a la salida en orden
+*/
 vector<Position>* ExecuteBFS(Execution* execution) {
   if (!execution->graph) {
     return nullptr;

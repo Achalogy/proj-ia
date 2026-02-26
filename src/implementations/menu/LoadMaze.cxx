@@ -3,6 +3,7 @@
 #include "../../core/Maze.h"
 using namespace std;
 
+// Función para cargar el laberinto desde un archivo de texto hacia el sistema
 void LoadMaze(Maze* maze) {
   string filename = "";
 
