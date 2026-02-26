@@ -11,7 +11,6 @@
 #include "./implementations/algorithms/AStar.h"
 #include "./implementations/algorithms/BFS.h"
 #include "./implementations/algorithms/DFS.h"
-#include "./implementations/algorithms/Heuristica.h"
 
 using namespace std;
 
@@ -22,8 +21,7 @@ int menu() {
     cout << "1. Cargar laberinto" << endl;
     cout << "2. Función en profundidad" << endl;
     cout << "3. Función en anchura" << endl;
-    cout << "4. Función heurística" << endl;
-    cout << "5. Funcion A*" << endl;
+    cout << "4. Funcion A*" << endl;
     cout << "6. Salir" << endl;
 
     cout << "> ";
@@ -60,11 +58,6 @@ int main(void) {
         break;
       }
       case 4: {
-        result = ExecuteHeuristica(execution);
-        PrintPath(result, execution);
-        break;
-      }
-      case 5: {
         result = ExecuteAStar(execution);
         PrintPath(result, execution);
         break;
