@@ -33,8 +33,25 @@ void PrintPath(vector<Position>* path, Execution* execution) {
     }
   }
 
-  for (Position pos : *path) {
+  for (int step = 0; step < (*path).size(); step++) {
+    Position pos = (*path)[step];
     matrix[pos.y][pos.x] = "*";
+    if (step == (*path).size() - 1 || step == 0) {
+      continue;
+    }
+    Position nextPos = (*path)[step + 1];
+
+    int dy = nextPos.y - pos.y;
+    int dx = nextPos.x - pos.x;
+
+    if (dy == -1)
+      matrix[pos.y][pos.x] = "^";
+    else if (dy == 1)
+      matrix[pos.y][pos.x] = "V";
+    else if (dx == 1)
+      matrix[pos.y][pos.x] = ">";
+    else if (dx == -1)
+      matrix[pos.y][pos.x] = "<";
   }
 
   for (int i = 0; i < execution->graph->maze->n; i++) {
