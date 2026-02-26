@@ -4,11 +4,16 @@
 
 using namespace std;
 
+/*
+  Función para inprimir el camino que se genero con alguno de los otros
+  algoritmos.
+*/
 void PrintPath(vector<Position>* path, Execution* execution) {
   if (path->empty()) return;
 
   string** matrix = new string*[execution->graph->maze->n];
 
+  // Dibujamos inicialmente el laberinto sin el camino
   for (int i = 0; i < execution->graph->maze->n; i++) {
     matrix[i] = new string[execution->graph->maze->m];
 
@@ -33,6 +38,7 @@ void PrintPath(vector<Position>* path, Execution* execution) {
     }
   }
 
+  // Luego por cada posición de la ruta vamos a revisar hacia donde esta yendo
   for (int step = 0; step < (*path).size(); step++) {
     Position pos = (*path)[step];
     matrix[pos.y][pos.x] = "*";
@@ -60,4 +66,6 @@ void PrintPath(vector<Position>* path, Execution* execution) {
     }
     cout << endl;
   }
+
+  delete[] matrix;
 }
