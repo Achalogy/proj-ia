@@ -19,7 +19,7 @@ vector<Node*>* ExecuteBFS(Execution* execution) {
   int m = execution->graph->maze->m;
 
   PathNode* start = new PathNode(execution->graph->start, nullptr);
-  PathNode* end;
+  PathNode* end = nullptr;
 
   vector<vector<bool>> visited(n, vector<bool>(m, false));
 

@@ -1,72 +1,47 @@
 #include <bits/stdc++.h>
-
 #include "../core/Execution.h"
+#include "./ExpandPath.h"
 
 using namespace std;
 
 /*
-  Función para inprimir el camino que se genero con alguno de los otros
-  algoritmos.
+  Función para imprimir el camino (ahora expandido) que se generó con alguno
+  de los algoritmos.
 */
 void PrintPath(vector<Node*>* path, Execution* execution) {
-  if (path->empty()) return;
+  if (path == nullptr || path->empty()) {
+    cout << "No se encontró un camino." << endl;
+    return;
+  }
 
+  // Expandir la ruta macro a una ruta completa
+  vector<pair<int,int>> expandedPath = expandPath(path, execution);
+
+  // Crear matriz visual
   string** matrix = new string*[execution->graph->maze->n];
 
-  // Dibujamos inicialmente el laberinto sin el camino
   for (int i = 0; i < execution->graph->maze->n; i++) {
     matrix[i] = new string[execution->graph->maze->m];
-
     for (int j = 0; j < execution->graph->maze->m; j++) {
-      string c = "";
-
-      switch (execution->graph->maze->matrix[i][j]) {
-        case '0':
-          c = "·";
-          break;
-        case '1':
-          c = "■";
-          break;
-        case '2':
-          c = "O";
-          break;
-        case '3':
-          c = "X";
-          break;
+      char c = execution->graph->maze->matrix[i][j];
+      switch (c) {
+        case '0': matrix[i][j] = "·"; break;
+        case '1': matrix[i][j] = "■"; break;
+        case '2': matrix[i][j] = "O"; break;
+        case '3': matrix[i][j] = "X"; break;
+        default:  matrix[i][j] = "·"; break;
       }
-      matrix[i][j] = c;
     }
   }
 
-  // Luego por cada posición de la ruta vamos a revisar hacia donde esta yendo
-
-  queue<Node*> q;
-  q.push(execution->graph->start);
-  vector<vector<bool>> visited(execution->graph->maze->n,
-                               vector<bool>(execution->graph->maze->m, false));
-
-  visited[execution->graph->start->y][execution->graph->start->x] = true;
-
-  while (!q.empty()) {
-    Node* node = q.front();
-    q.pop();
-    matrix[node->y][node->x] = "#";
-    for (pair<int, Node*> nn : node->adj) {
-      if (visited[nn.second->y][nn.second->x]) continue;
-      visited[nn.second->y][nn.second->x] = true;
-      q.push(nn.second);
+  // Marcar la ruta expandida con '*'
+  for (auto [y,x] : expandedPath) {
+    if (execution->graph->maze->matrix[y][x] == '0') {
+      matrix[y][x] = "*";
     }
   }
 
-  for (int step = 0; step < (*path).size(); step++) {
-    Node* node = (*path)[step];
-    matrix[node->y][node->x] = "*";
-    if (step == (*path).size() - 1 || step == 0) {
-      continue;
-    }
-    Node* nextNode = (*path)[step + 1];
-  }
-
+  // Imprimir el resultado
   for (int i = 0; i < execution->graph->maze->n; i++) {
     for (int j = 0; j < execution->graph->maze->m; j++) {
       cout << matrix[i][j] << " ";
