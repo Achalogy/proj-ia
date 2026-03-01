@@ -11,8 +11,6 @@ struct Node {
   int y;
   int x;
 
-  int weight;
-
   vector<pair<int, Node*>> adj;
 };
 

@@ -83,7 +83,7 @@ Graph* MatrixToGraph(Maze* maze) {
       switch (maze->matrix[i][j]) {
         case '0': {
           int adjCount = getNCount(maze, i, j);
-          if (adjCount > 2) {
+          if (adjCount != 2) {
             node = new Node();
           }
           break;

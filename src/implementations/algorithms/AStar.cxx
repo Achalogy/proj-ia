@@ -51,8 +51,8 @@ vector<Node*>* ExecuteAStar(Execution* execution) {
     }
 
     for (pair<int, Node*> u : curr.second->node->adj) {
-      long n_weigth = weight[curr.second->node->y][curr.second->node->x] +
-                      curr.second->node->weight;
+      long n_weigth =
+          weight[curr.second->node->y][curr.second->node->x] + u.first;
 
       if (weight[u.second->y][u.second->x] <= n_weigth) continue;
 
