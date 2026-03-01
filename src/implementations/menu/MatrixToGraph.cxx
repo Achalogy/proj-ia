@@ -35,7 +35,7 @@ int getNCount(Maze* maze, int i, int j) {
 // Función para convertir una matriz a una estructura de grafo usando
 // apuntadores.
 
-void getAdj(Maze* maze, vector<vector<Node*>> nodeMatrix, Node* curr,
+void getAdj(Maze* maze, vector<vector<Node*>>& nodeMatrix, Node* curr,
             vector<vector<bool>>& visited, int i, int j, int w) {
   if (visited[i][j]) return;
   visited[i][j] = true;
@@ -132,7 +132,6 @@ Graph* MatrixToGraph(Maze* maze) {
 
   cout << "Laberinto válido, grafo generado" << endl;
 
-  
   for (int i = 0; i < maze->n; i++) {
     for (int j = 0; j < maze->m; j++) {
       string c;
@@ -151,8 +150,7 @@ Graph* MatrixToGraph(Maze* maze) {
           break;
       }
 
-      if(nodeMatrix[i][j] != nullptr)
-        c = "#";
+      if (nodeMatrix[i][j] != nullptr) c = "#";
       cout << c << " ";
     }
     cout << endl;
