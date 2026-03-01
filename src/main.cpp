@@ -5,7 +5,7 @@
 #include "./implementations/menu/LoadMaze.h"
 #include "./implementations/menu/MatrixToGraph.h"
 #include "./utils/PrintPath.h"
-
+#include "./utils/StepPrint.h"
 // Funciones de cada algoritmo
 
 #include "./implementations/algorithms/AStar.h"
@@ -50,17 +50,17 @@ int main(void) {
       }
       case 2: {
         result = ExecuteDFS(execution);
-        PrintPath(result, execution);
+        StepPrint(result, execution);
         break;
       }
       case 3: {
         result = ExecuteBFS(execution);
-        PrintPath(result, execution);
+        StepPrint(result, execution);
         break;
       }
       case 4: {
         result = ExecuteAStar(execution);
-        PrintPath(result, execution);
+        StepPrint(result, execution);
         break;
       }
       case 5:

@@ -34,11 +34,26 @@ void PrintPath(vector<Node*>* path, Execution* execution) {
     }
   }
 
-  // Marcar la ruta expandida con '*'
-  for (auto [y,x] : expandedPath) {
-    if (execution->graph->maze->matrix[y][x] == '0') {
-      matrix[y][x] = "*";
+
+  for(int i = 0; i < expandedPath.size();i++) {
+    pair<int, int> step = expandedPath[i];
+
+    string c = "*";
+
+    if(i < expandedPath.size() - 1 && i > 0) {
+      pair<int, int> next_step = expandedPath[i+1];
+
+      if(next_step.first - step.first == 1)
+        c = "v";
+      if(next_step.first - step.first == -1)
+        c = "^";
+      if(next_step.second - step.second == 1)
+        c = ">";
+      if(next_step.second - step.second == -1)
+        c = "<";
     }
+
+    matrix[step.first][step.second] = c;
   }
 
   // Imprimir el resultado
