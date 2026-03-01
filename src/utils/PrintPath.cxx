@@ -47,13 +47,6 @@ void PrintPath(vector<Node*>* path, Execution* execution) {
     }
     Node* nextNode = (*path)[step + 1];
 
-    cout << "Next node" << endl;
-    cout << "  y = " << nextNode->y << endl;
-    cout << "  x = " << nextNode->y << endl;
-    cout << "Current node" << endl;
-    cout << "  y = " << node->y << endl;
-    cout << "  x = " << node->y << endl;
-
     int dy = nextNode->y - node->y;
     int dx = nextNode->x - node->x;
 
