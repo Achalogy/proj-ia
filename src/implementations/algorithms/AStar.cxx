@@ -19,8 +19,7 @@ vector<Node*>* ExecuteAStar(Execution* execution) {
   int m = execution->graph->maze->m;
 
   PathNode* start = new PathNode(execution->graph->start, nullptr);
-  PathNode* end;
-
+  PathNode* end = nullptr;
   vector<vector<int>> heuristic(n, vector<int>(m, INFINITY));
 
   for (int i = 0; i < n; i++) {
