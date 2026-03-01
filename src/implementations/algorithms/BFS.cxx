@@ -2,55 +2,61 @@
 #include <bits/stdc++.h>
 
 #include "../../core/Execution.h"
+#include "../../core/PathNode.h"
 
 using namespace std;
 
 /*
-  Función que ejecuta el algoritmo de busqueda en anchura o BFS sobre un grafo dado
-  Retorna el vector de posiciones seguidas para llegar a la salida en orden
+  Función que ejecuta el algoritmo de busqueda en anchura o BFS sobre un grafo
+  dado Retorna el vector de posiciones seguidas para llegar a la salida en orden
 */
-vector<Position>* ExecuteBFS(Execution* execution) {
+vector<Node*>* ExecuteBFS(Execution* execution) {
   if (!execution->graph) {
     return nullptr;
   }
 
-  vector<bool> visited(execution->graph->maze->m * execution->graph->maze->n,
-                       false);
-  vector<long> parent(execution->graph->maze->m * execution->graph->maze->n,
-                      -1);
+  int n = execution->graph->maze->n;
+  int m = execution->graph->maze->m;
 
-  queue<long> q;
+  PathNode* start = new PathNode(execution->graph->start, nullptr);
+  PathNode* end;
 
-  q.push(execution->graph->start->id);
-  parent[execution->graph->start->id] = -1;
-  visited[execution->graph->start->id] = true;
+  vector<vector<bool>> visited(n, vector<bool>(m, false));
+
+  queue<PathNode*> q;
+
+  q.push(start);
+  visited[start->node->y][start->node->x] = true;
 
   while (!q.empty()) {
-    long curr = q.front();
+    PathNode* curr = q.front();
     q.pop();
 
-    for (long u : execution->graph->adj[curr]) {
-      if (visited[u]) continue;
-      visited[u] = true;
-      parent[u] = curr;
+    if (curr->node->type == '3') {
+      end = curr;
+      break;
+    }
 
-      q.push(u);
+    for (Node* u : curr->node->adj) {
+      if (visited[u->y][u->x]) continue;
+      visited[u->y][u->x] = true;
+
+      q.push(new PathNode(u, curr));
     }
   }
 
   // Reconstruir recorrido
 
-  long curr = execution->graph->end->id;
-  vector<Position> path;
+  PathNode* curr = end;
+  vector<Node*>* path = new vector<Node*>();
 
-  while (curr != -1) {
-    Position pos;
-    pos.y = curr / execution->graph->maze->m;
-    pos.x = curr % execution->graph->maze->m;
-
-    path.push_back(pos);
-    curr = parent[curr];
+  while (curr != nullptr) {
+    path->push_back(curr->node);
+    curr = curr->parent;
   }
 
-  return new vector<Position>(path.rbegin(), path.rend());
+  reverse(path->begin(), path->end());
+
+  // Retornar un vector reversado
+  return path;
 }

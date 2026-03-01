@@ -8,7 +8,7 @@ using namespace std;
   Función para inprimir el camino que se genero con alguno de los otros
   algoritmos.
 */
-void PrintPath(vector<Position>* path, Execution* execution) {
+void PrintPath(vector<Node*>* path, Execution* execution) {
   if (path->empty()) return;
 
   string** matrix = new string*[execution->graph->maze->n];
@@ -40,24 +40,31 @@ void PrintPath(vector<Position>* path, Execution* execution) {
 
   // Luego por cada posición de la ruta vamos a revisar hacia donde esta yendo
   for (int step = 0; step < (*path).size(); step++) {
-    Position pos = (*path)[step];
-    matrix[pos.y][pos.x] = "*";
+    Node* node = (*path)[step];
+    matrix[node->y][node->x] = "*";
     if (step == (*path).size() - 1 || step == 0) {
       continue;
     }
-    Position nextPos = (*path)[step + 1];
+    Node* nextNode = (*path)[step + 1];
 
-    int dy = nextPos.y - pos.y;
-    int dx = nextPos.x - pos.x;
+    cout << "Next node" << endl;
+    cout << "  y = " << nextNode->y << endl;
+    cout << "  x = " << nextNode->y << endl;
+    cout << "Current node" << endl;
+    cout << "  y = " << node->y << endl;
+    cout << "  x = " << node->y << endl;
+
+    int dy = nextNode->y - node->y;
+    int dx = nextNode->x - node->x;
 
     if (dy == -1)
-      matrix[pos.y][pos.x] = "^";
+      matrix[node->y][node->x] = "^";
     else if (dy == 1)
-      matrix[pos.y][pos.x] = "V";
+      matrix[node->y][node->x] = "V";
     else if (dx == 1)
-      matrix[pos.y][pos.x] = ">";
+      matrix[node->y][node->x] = ">";
     else if (dx == -1)
-      matrix[pos.y][pos.x] = "<";
+      matrix[node->y][node->x] = "<";
   }
 
   for (int i = 0; i < execution->graph->maze->n; i++) {

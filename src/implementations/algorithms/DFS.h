@@ -2,8 +2,9 @@
 #define DFS_H
 
 #include <vector>
+
 #include "../../core/Execution.h"
 
-vector<Position>* ExecuteDFS(Execution* execution);
+vector<Node*>* ExecuteDFS(Execution* execution);
 
 #endif

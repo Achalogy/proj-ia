@@ -1,3 +1,9 @@
-#include "../../core/Execution.h"
+#ifndef ASTAR_H
+#define ASTAR_H
 
-vector<Position>* ExecuteAStar(Execution* execution);
+#include "../../core/Execution.h"
+#include "../../core/Node.h"
+
+vector<Node*>* ExecuteAStar(Execution* execution);
+
+#endif

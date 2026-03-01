@@ -1,3 +1,9 @@
-#include "../../core/Execution.h"
+#ifndef BFS_H
+#define BFS_H
 
-vector<Position>* ExecuteBFS(Execution* execution);
+#include "../../core/Execution.h"
+#include "../../core/Node.h"
+
+vector<Node*>* ExecuteBFS(Execution* execution);
+
+#endif

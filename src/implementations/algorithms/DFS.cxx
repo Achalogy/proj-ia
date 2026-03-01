@@ -3,60 +3,61 @@
 #include <bits/stdc++.h>
 
 #include "../../core/Execution.h"
+#include "../../core/PathNode.h"
 
 using namespace std;
 
 /*
-  Función principal del dfs, es la función recursiva que es llamada por cada nodo.
+  Función principal del dfs, es la función recursiva que es llamada por cada
+  nodo.
 */
-bool dfsHelper(int u, int target, Graph* graph, vector<bool>& visited,
-               map<int, int>& parent) {
-  visited[u] = true;
+PathNode* dfsHelper(vector<vector<bool>>& visited, PathNode* curr) {
+  visited[curr->node->y][curr->node->x] = true;
 
-  if (u == target) return true;
+  if (curr->node->type == '3') return curr;
 
-  for (int v : graph->adj[u]) {
-    if (!visited[v]) {
-      parent[v] = u;
-      if (dfsHelper(v, target, graph, visited, parent)) {
-        return true;
-      }
-    }
+  for (Node* u : curr->node->adj) {
+    if (visited[u->y][u->x]) continue;
+
+    PathNode* res = dfsHelper(visited, new PathNode(u, curr));
+
+    if (res != nullptr) return res;
   }
-  return false;
+  return nullptr;
 }
 
 /*
-  Función que ejecuta el algoritmo de busqueda en profundidad o DFS sobre un grafo dado
-  Retorna el vector de posiciones seguidas para llegar a la salida en orden
+  Función que ejecuta el algoritmo de busqueda en profundidad o DFS sobre un
+  grafo dado Retorna el vector de posiciones seguidas para llegar a la salida en
+  orden
 */
-vector<Position>* ExecuteDFS(Execution* execution) {
+vector<Node*>* ExecuteDFS(Execution* execution) {
   if (!execution->graph) {
     return nullptr;
   }
 
-  Graph* g = execution->graph;
-  int startId = g->start->id;
-  int endId = g->end->id;
+  int n = execution->graph->maze->n;
+  int m = execution->graph->maze->m;
 
   // Inicializamos estructuras
-  vector<bool> visited(g->nodes.size(), false);
-  map<int, int> parent;
-  vector<Position>* path = new vector<Position>();
+  vector<vector<bool>> visited(n, vector<bool>(m, false));
 
-  // Reconstruir el camino y retornarlo
-  if (dfsHelper(startId, endId, g, visited, parent)) {
-    int curr = endId;
-    while (curr != startId) {
-      path->push_back({g->nodes[curr]->y, g->nodes[curr]->x});
-      curr = parent[curr];
-    }
-    path->push_back({g->nodes[startId]->y, g->nodes[startId]->x});
+  Graph* g = execution->graph;
+  PathNode* start = new PathNode(g->start, nullptr);
+  PathNode* end = dfsHelper(visited, start);
 
-    reverse(path->begin(), path->end());
+  // Reconstruir recorrido
 
-    return path;
-  } else {
-    return nullptr;
+  PathNode* curr = end;
+  vector<Node*>* path = new vector<Node*>();
+
+  while (curr != nullptr) {
+    path->push_back(curr->node);
+    curr = curr->parent;
   }
+
+  reverse(path->begin(), path->end());
+
+  // Retornar un vector reversado
+  return path;
 }

@@ -1,13 +1,19 @@
 #ifndef NODE_H
 #define NODE_H
 
+#include <bits/stdc++.h>
+
+using namespace std;
+
 struct Node {
-  long id;
-  
   char type;
 
   int y;
   int x;
+
+  int weight;
+
+  vector<Node*> adj;
 };
 
 #endif

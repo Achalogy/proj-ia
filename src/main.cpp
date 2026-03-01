@@ -22,11 +22,11 @@ int menu() {
     cout << "2. Función en profundidad" << endl;
     cout << "3. Función en anchura" << endl;
     cout << "4. Funcion A*" << endl;
-    cout << "6. Salir" << endl;
+    cout << "5. Salir" << endl;
 
     cout << "> ";
     cin >> opt;
-  } while (opt < 1 || opt > 7);
+  } while (opt < 1 || opt > 6);
 
   return opt;
 }
@@ -36,7 +36,7 @@ int main(void) {
   SetConsoleOutputCP(CP_UTF8);
 
   Execution* execution = new Execution();
-  vector<Position>* result;
+  vector<Node*>* result;
 
   while (true) {
     int opt = menu();
@@ -63,7 +63,7 @@ int main(void) {
         PrintPath(result, execution);
         break;
       }
-      case 6:
+      case 5:
         return 0;
     }
   }

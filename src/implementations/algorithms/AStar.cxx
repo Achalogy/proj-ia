@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 
 #include "../../core/Execution.h"
+#include "../../core/PathNode.h"
 
 using namespace std;
 
@@ -13,12 +14,12 @@ long calc_heuristic(Execution* execution, int i, int j) {
   Función que ejecuta el algoritmo de busqueda A* sobre un grafo dado
   Retorna el vector de posiciones seguidas para llegar a la salida en orden
 */
-vector<Position>* ExecuteAStar(Execution* execution) {
+vector<Node*>* ExecuteAStar(Execution* execution) {
   int n = execution->graph->maze->n;
   int m = execution->graph->maze->m;
 
-  long start_id = execution->graph->start->id;
-  long end_id = execution->graph->end->id;
+  PathNode* start = new PathNode(execution->graph->start, nullptr);
+  PathNode* end;
 
   vector<vector<int>> heuristic(n, vector<int>(m, INFINITY));
 
@@ -30,55 +31,49 @@ vector<Position>* ExecuteAStar(Execution* execution) {
     }
   }
 
-  priority_queue<pair<long, long>, vector<pair<long, long>>,
-                 greater<pair<long, long>>>
+  priority_queue<pair<long, PathNode*>, vector<pair<long, PathNode*>>,
+                 greater<pair<long, PathNode*>>>
       pq;
 
   vector<vector<long>> weight(n, vector<long>(m, 1e9));
 
-  vector<long> parent(m * n, -1);
+  pq.push(make_pair(heuristic[start->node->y][start->node->x], start));
 
-  pq.push(make_pair(heuristic[start_id / m][start_id % m], start_id));
-  parent[start_id] = -1;
-  weight[start_id / m][start_id % m] = 0;
+  weight[start->node->y][start->node->x] = 0;
 
   while (!pq.empty()) {
-    pair<long, long> curr = pq.top();
+    pair<long, PathNode*> curr = pq.top();
     pq.pop();
-    int i = curr.second / m;
-    int j = curr.second % m;
 
-    if (curr.second == end_id) break;
+    if (curr.second->node->type == '3') {
+      end = curr.second;
+      break;
+    }
 
-    for (long u : execution->graph->adj[curr.second]) {
-      int ui = u / m;
-      int uj = u % m;
+    for (Node* u : curr.second->node->adj) {
+      long n_weigth = weight[curr.second->node->y][curr.second->node->x] +
+                      curr.second->node->weight;
 
-      long n_weigth = weight[i][j] + 1;
+      if (weight[u->y][u->x] <= n_weigth) continue;
 
-      if (weight[ui][uj] <= n_weigth) continue;
+      weight[u->y][u->x] = n_weigth;
+      PathNode* nu = new PathNode(u, curr.second);
 
-      weight[ui][uj] = n_weigth;
-      parent[u] = curr.second;
-
-      pq.push(make_pair(weight[ui][uj] + heuristic[ui][uj], u));
+      pq.push(make_pair(weight[u->y][u->x] + heuristic[u->y][u->x], nu));
     }
   }
-
   // Reconstruir recorrido
 
-  long curr = execution->graph->end->id;
-  vector<Position> path;
+  PathNode* curr = end;
+  vector<Node*>* path = new vector<Node*>();
 
-  while (curr != -1) {
-    Position pos;
-    pos.y = curr / m;
-    pos.x = curr % m;
-
-    path.push_back(pos);
-    curr = parent[curr];
+  while (curr != nullptr) {
+    path->push_back(curr->node);
+    curr = curr->parent;
   }
 
+  reverse(path->begin(), path->end());
+
   // Retornar un vector reversado
-  return new vector<Position>(path.rbegin(), path.rend());
+  return path;
 }
