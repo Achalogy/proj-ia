@@ -38,22 +38,18 @@ void PrintPath(vector<Node*>* path, Execution* execution) {
   for(int i = 0; i < expandedPath.size();i++) {
     pair<int, int> step = expandedPath[i];
 
-    string c = "*";
+    string c = "\033[31m*";
 
     if(i < expandedPath.size() - 1 && i > 0) {
       pair<int, int> next_step = expandedPath[i+1];
 
-      if(next_step.first - step.first == 1)
-        c = "v";
-      if(next_step.first - step.first == -1)
-        c = "^";
-      if(next_step.second - step.second == 1)
-        c = ">";
-      if(next_step.second - step.second == -1)
-        c = "<";
+      if (next_step.first - step.first == 1) c = "\033[33mv";
+      if (next_step.first - step.first == -1) c = "\033[33m^";
+      if (next_step.second - step.second == 1) c = "\033[33m>";
+      if (next_step.second - step.second == -1) c = "\033[33m<";
     }
 
-    matrix[step.first][step.second] = c;
+    matrix[step.first][step.second] = c + "\033[0m";
   }
 
   // Imprimir el resultado
