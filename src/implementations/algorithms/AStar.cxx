@@ -50,16 +50,18 @@ vector<Node*>* ExecuteAStar(Execution* execution) {
       break;
     }
 
-    for (Node* u : curr.second->node->adj) {
+    for (pair<int, Node*> u : curr.second->node->adj) {
       long n_weigth = weight[curr.second->node->y][curr.second->node->x] +
                       curr.second->node->weight;
 
-      if (weight[u->y][u->x] <= n_weigth) continue;
+      if (weight[u.second->y][u.second->x] <= n_weigth) continue;
 
-      weight[u->y][u->x] = n_weigth;
-      PathNode* nu = new PathNode(u, curr.second);
+      weight[u.second->y][u.second->x] = n_weigth;
+      PathNode* nu = new PathNode(u.second, curr.second);
 
-      pq.push(make_pair(weight[u->y][u->x] + heuristic[u->y][u->x], nu));
+      pq.push(make_pair(weight[u.second->y][u.second->x] +
+                            heuristic[u.second->y][u.second->x],
+                        nu));
     }
   }
   // Reconstruir recorrido

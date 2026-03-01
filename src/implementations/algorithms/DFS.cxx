@@ -16,10 +16,10 @@ PathNode* dfsHelper(vector<vector<bool>>& visited, PathNode* curr) {
 
   if (curr->node->type == '3') return curr;
 
-  for (Node* u : curr->node->adj) {
-    if (visited[u->y][u->x]) continue;
+  for (pair<int, Node*> u : curr->node->adj) {
+    if (visited[u.second->y][u.second->x]) continue;
 
-    PathNode* res = dfsHelper(visited, new PathNode(u, curr));
+    PathNode* res = dfsHelper(visited, new PathNode(u.second, curr));
 
     if (res != nullptr) return res;
   }

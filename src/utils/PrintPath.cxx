@@ -51,10 +51,10 @@ void PrintPath(vector<Node*>* path, Execution* execution) {
     Node* node = q.front();
     q.pop();
     matrix[node->y][node->x] = "#";
-    for (Node* nn : node->adj) {
-      if (visited[nn->y][nn->x]) continue;
-      visited[nn->y][nn->x] = true;
-      q.push(nn);
+    for (pair<int, Node*> nn : node->adj) {
+      if (visited[nn.second->y][nn.second->x]) continue;
+      visited[nn.second->y][nn.second->x] = true;
+      q.push(nn.second);
     }
   }
 
@@ -65,7 +65,6 @@ void PrintPath(vector<Node*>* path, Execution* execution) {
       continue;
     }
     Node* nextNode = (*path)[step + 1];
-
   }
 
   for (int i = 0; i < execution->graph->maze->n; i++) {

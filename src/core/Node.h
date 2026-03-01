@@ -13,7 +13,7 @@ struct Node {
 
   int weight;
 
-  vector<Node*> adj;
+  vector<pair<int, Node*>> adj;
 };
 
 #endif

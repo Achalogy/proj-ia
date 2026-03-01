@@ -37,11 +37,11 @@ vector<Node*>* ExecuteBFS(Execution* execution) {
       break;
     }
 
-    for (Node* u : curr->node->adj) {
-      if (visited[u->y][u->x]) continue;
-      visited[u->y][u->x] = true;
+    for (pair<int, Node*> u : curr->node->adj) {
+      if (visited[u.second->y][u.second->x]) continue;
+      visited[u.second->y][u.second->x] = true;
 
-      q.push(new PathNode(u, curr));
+      q.push(new PathNode(u.second, curr));
     }
   }
 
