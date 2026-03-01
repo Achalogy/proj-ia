@@ -39,6 +39,25 @@ void PrintPath(vector<Node*>* path, Execution* execution) {
   }
 
   // Luego por cada posición de la ruta vamos a revisar hacia donde esta yendo
+
+  queue<Node*> q;
+  q.push(execution->graph->start);
+  vector<vector<bool>> visited(execution->graph->maze->n,
+                               vector<bool>(execution->graph->maze->m, false));
+
+  visited[execution->graph->start->y][execution->graph->start->x] = true;
+
+  while (!q.empty()) {
+    Node* node = q.front();
+    q.pop();
+    matrix[node->y][node->x] = "#";
+    for (Node* nn : node->adj) {
+      if (visited[nn->y][nn->x]) continue;
+      visited[nn->y][nn->x] = true;
+      q.push(nn);
+    }
+  }
+
   for (int step = 0; step < (*path).size(); step++) {
     Node* node = (*path)[step];
     matrix[node->y][node->x] = "*";
@@ -47,17 +66,6 @@ void PrintPath(vector<Node*>* path, Execution* execution) {
     }
     Node* nextNode = (*path)[step + 1];
 
-    int dy = nextNode->y - node->y;
-    int dx = nextNode->x - node->x;
-
-    if (dy == -1)
-      matrix[node->y][node->x] = "^";
-    else if (dy == 1)
-      matrix[node->y][node->x] = "V";
-    else if (dx == 1)
-      matrix[node->y][node->x] = ">";
-    else if (dx == -1)
-      matrix[node->y][node->x] = "<";
   }
 
   for (int i = 0; i < execution->graph->maze->n; i++) {

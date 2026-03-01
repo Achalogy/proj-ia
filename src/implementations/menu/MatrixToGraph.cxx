@@ -6,6 +6,8 @@
 
 using namespace std;
 
+pair<int, int> directions[4] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
 bool validPos(Maze* maze, int i, int j) {
   if (i < 0 || i >= maze->n) return false;
   if (j < 0 || j >= maze->m) return false;
@@ -47,6 +49,50 @@ int getNCount(Maze* maze, int i, int j) {
   return count;
 }
 
+void printStep(Maze* maze, map<pair<int, int>, Node*>& nodeCache, int y,
+               int x) {
+  string** matrix = new string*[maze->n];
+
+  // Dibujamos inicialmente el laberinto sin el camino
+  for (int i = 0; i < maze->n; i++) {
+    matrix[i] = new string[maze->m];
+
+    for (int j = 0; j < maze->m; j++) {
+      string c = "";
+
+      switch (maze->matrix[i][j]) {
+        case '0':
+          c = ".";
+          break;
+        case '1':
+          c = "|";
+          break;
+        case '2':
+          c = "O";
+          break;
+        case '3':
+          c = "X";
+          break;
+      }
+      matrix[i][j] = c;
+    }
+  }
+
+  for (auto& [pos, node] : nodeCache) {
+    matrix[pos.first][pos.second] = "#";
+  }
+
+  matrix[y][x] = "O";
+
+  for (int i = 0; i < maze->n; i++) {
+    for (int j = 0; j < maze->m; j++) {
+      cout << matrix[i][j] << " ";
+    }
+    cout << endl;
+  }
+  cout << endl;
+}
+
 // Dirección
 // arriba - 0
 // derecha - 1
@@ -54,20 +100,43 @@ int getNCount(Maze* maze, int i, int j) {
 // izquierda - 3
 Node* collapseToDirection(Maze* maze, vector<vector<bool>>& visited,
                           map<pair<int, int>, Node*>& nodeCache, Node* curr,
-                          pair<int, int> dir) {
+                          int dirIx) {
+  pair<int, int> dir = directions[dirIx];
   int y = curr->y + dir.first;
   int x = curr->x + dir.second;
+  if (visited[y][x]) return nullptr;
+
+  // printStep(maze, nodeCache, y, x);
 
   while (validPos(maze, y, x) && maze->matrix[y][x] == '0') {
     if (visited[y][x]) {
-      return nullptr;
+      y -= dir.first;
+      x -= dir.second;
+      break;
     }
     visited[y][x] = true;
 
     if (getNCount(maze, y, x) > 2) break;
 
+    if (!walkable(maze, y + dir.first, x + dir.second)) {
+      // Encontrar siguiente dirección
+      int ldirIx = dirIx == 0 ? 3 : dirIx - 1;
+      pair<int, int> ldir = directions[ldirIx];
+      int rdirIx = dirIx == 3 ? 0 : dirIx + 1;
+      pair<int, int> rdir = directions[rdirIx];
+      if (walkable(maze, y + ldir.first, x + ldir.second)) {
+        dir = ldir;
+        dirIx = ldirIx;
+      } else if (walkable(maze, y + rdir.first, x + rdir.second)) {
+        dir = rdir;
+        dirIx = rdirIx;
+      }
+    }
+
     y += dir.first;
     x += dir.second;
+
+    // printStep(maze, nodeCache, y, x);
   }
   if (!walkable(maze, y, x)) {
     y -= dir.first;
@@ -100,16 +169,15 @@ Node* buildGraph(Graph* graph, vector<vector<bool>>& visited,
     graph->end = curr;
   }
 
-  int dy[] = {-1, 0, 1, 0};
-  int dx[] = {0, 1, 0, -1};
-
   for (int i = 0; i < 4; i++) {
-    if (walkable(graph->maze, curr->y + dy[i], curr->x + dx[i])) {
+    pair<int, int> direction = directions[i];
+    if (walkable(graph->maze, curr->y + direction.first,
+                 curr->x + direction.second)) {
       // Guardamos el tamaño del cache antes de colapsar
       size_t cacheSizeBefore = nodeCache.size();
 
-      Node* next = collapseToDirection(graph->maze, visited, nodeCache, curr,
-                                       {dy[i], dx[i]});
+      Node* next =
+          collapseToDirection(graph->maze, visited, nodeCache, curr, i);
 
       if (next != nullptr) {
         curr->adj.push_back(next);
